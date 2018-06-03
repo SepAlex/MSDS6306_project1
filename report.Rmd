@@ -1,0 +1,87 @@
+---
+title: "MSDS 6306 Project 1"
+output: html_document
+author:
+- Volodymyr Orlov
+- Swee Chew
+- Julius Mwangi
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE}
+library(data.table)
+breweries = read.csv('data/Breweries.csv')
+beers = read.csv('data/Beers.csv')
+```
+
+## Q1. How many breweries are present in each state?
+
+```{r, echo=TRUE}
+agg <- aggregate(breweries, by=list(breweries$State), length)
+agg = agg[, c("Group.1", "Brew_ID")]
+colnames(agg) <- c("State","Count")
+agg
+```
+
+## Q2. Merge beer data with the breweries data. Print the first 6 observations and the last six observations to check the merged file.
+
+```{r, echo=TRUE}
+beers_breweries = merge(beers, breweries, by.x='Brewery_id', by.y='Brew_ID')
+setnames(beers_breweries, "Name.x", "Beer.Name")
+setnames(beers_breweries, "Name.y", "Brewery.Name")
+```
+
+```{r, echo=TRUE}
+head(beers_breweries, n=6)
+```
+
+```{r, echo=TRUE}
+tail(beers_breweries, n=6)
+```
+
+## Q3. Report the number of NA's in each column.
+
+```{r, echo=TRUE}
+sapply(beers_breweries, function(y) sum(is.na(y)))
+```
+
+## Q4. Compute the median alcohol content and international bitterness unit for each state. Plot a bar chart to compare.
+
+```{r}
+agg <- aggregate(beers_breweries[,c("ABV", "IBU")], by=list(beers_breweries$State), FUN=function(x, ...) median(na.omit(x)))
+setnames(agg, "Group.1", "State")
+par(mfrow=c(2,1))
+barplot(agg$ABV, names.arg=agg$State, ylab="ABV", las=2, cex.axis=.5, cex.names=.5)
+barplot(agg$IBU, names.arg=agg$State, ylab="IBU", las=2, cex.axis=.5, cex.names=.5)
+```
+
+## Q5. Which state has the maximum alcoholic (ABV) beer? Which state has the most bitter (IBU) beer?
+
+### Which state has the maximum alcoholic (ABV) beer?
+```{r}
+max.ABV <- beers_breweries[which(beers_breweries$ABV == max(na.omit(beers_breweries$ABV))), ]
+max.ABV[, c('State', 'ABV')]
+```
+
+### Which state has the most bitter (IBU) beer?
+```{r}
+max.IBU <- beers_breweries[which(beers_breweries$IBU == max(na.omit(beers_breweries$IBU))), ]
+max.IBU[, c('State', 'IBU')]
+```
+
+## Q6. Summary statistics for the ABV variable.
+
+```{r}
+summary(beers_breweries$ABV)
+```
+
+## Q7. Is there an apparent relationship between the bitterness of the beer and its alcoholic content? Draw a scatter plot.
+
+```{r}
+plot(beers_breweries$IBU, beers_breweries$ABV, main="Bitterness vs alcoholic content", xlab="IBU", ylab="ABV", pch=19)
+```
+
+Yes, there is a linear relashionship between the bitterness of the beer and its alcoholic content.

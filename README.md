@@ -13,3 +13,12 @@ This study will help our client understand what stage the industry is at i.e. wh
 
 We caution however, that this study only focuses on production, location, type of beer and size. A correspsonding report on financials should be considered pari pasu our report. As such, additional research  on brewing profitability may be critical before making investement decision.
 
+Questions
+
+1. How many breweries are present in each state?
+2. Merge beer data with the breweries data. Print the first 6 observations and the last six observations to check the merged file.
+3. Report the number of NA's in each column.
+4. Compute the median alcohol content and internationalbitterness unit for each state. Plot a bar chart to compare.
+5. Which state has the maximum alcoholic (ABV) beer? Which state has the most bitter (IBU) beer?
+6. Summary statistics for the ABV variable.
+7. Is there an apparent relationship between the bitterness of the beer and its alcoholic content? Draw a scatter plot.

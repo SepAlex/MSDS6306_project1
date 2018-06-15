@@ -21,7 +21,8 @@ We have cautioned our client that this study focuses only on production, locatio
 
 ## Datasets: 'Beers.csv' and 'Breweries.csv'
 
-Our research will involve investigating and collating two datasets, the first containing a list of 2410 US craft beers and the second containing 558 US breweries. The two datasets are read using the R software prior to analysis. We assigned the Beers dataset to an object 'beers,' and the Breweries dataset to an object 'breweries. 
+Our research will involve investigating and collating two datasets, the first, "Beers.csv"contains a list of 2410 US craft beers and the second, "Breweries.csv" contains 558 US breweries. The two datasets are read using the R software prior to analysis. We assigned the Beers dataset to an object 'beers,' and the Breweries dataset to an object 'breweries. We shall use these two datasets help us understand the breweries per state, the beer brands in the different breweries, the beer quality in terms of alcohol content and international bitterness unit and which states have beers with most alochol and most bitter.
+
 ```{r breweries}
 beers <- read.csv ('/Users/swee/Desktop/SMU/Summer 2018/MSDS 6306 - Doing DS/dataset/Beers.csv', header=T, sep=",")
 breweries <- read.csv ('/Users/swee/Desktop/SMU/Summer 2018/MSDS 6306 - Doing DS/dataset/Breweries.csv', header=T, sep=",")
@@ -78,11 +79,9 @@ median_IBU
 barplot(median_IBU, xlab = "State", ylab = "Median International Bitterness Unit", main = "Median International Bitterness Unit by State", col = "green", las =2, cex.axis = .5, cex.names = .5)
 ```
 
-### 5. Which state has the maximum alcoholic (ABV) beer? Which state has the most bitter (IBU) beer?
+### 5. State the maximum alcoholic (ABV) beer and state with the most bitter (IBU) beer.
 
-The 'tapply' function is used to compute the maximum alcohol by volume (ABV) and international bitterness unit (IBU) for each state. Since both variables contain NA's, 'na.rm' argument is used to remove NA's when computing the maximum. 
-
-CO State has the maximum alcohol by volume of the beer and OR State has the most bitter beer.
+The 'tapply' function is used to compute the maximum alcohol by volume (ABV) and international bitterness unit (IBU) for each state. Since both variables contain NA's, 'na.rm' argument is used to remove NA's when computing the maximum. From our analysis, the state of Colorado has the maximum alcohol by volume of the beer while Oregoon has the most bitter beer.
 ```{r breweries6}
 max_ABV <- tapply(beers_breweries$ABV, beers_breweries$State, max, na.rm = TRUE)
 max_ABV1 <- sort(max_ABV, decreasing = TRUE)

@@ -1,5 +1,5 @@
 ---
-title: "MSDS 6306 - Case Sutdy 1"
+title: "MSDS 6306 - Case Study 1"
 author: "Swee K Chew"
 date: "7/10/2018"
 output: html_document
@@ -9,34 +9,41 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Introduction
+
+According to a report issued by the Brewers Association in 2016, "the economic impact of small and independent U.S. craft brewers has doubled," in the last four years. The study further reported that the inustry contributed $68.7B to the industry and provides more than 456,000 full time jobs (https://www.brewbound.com/news/study-us-craft-beer-industry-contributes-68-billion-economy).
+
+Our client would like us to provide mor information on the the beer industry, specifically  past trends, production and supply mechanics, and evaluate plausible future outlook. Our study will be geered towards understanding the beer industry and establishing expansion possibilities for our client, on the premise that the beer industry is flourishing with an insatiable demand. We will from our research answer the questions; how many breweries are there and how are they distributed in the country; Which brewery ranks highest in production; what brands of beer are produced most; How many ounces are commonly produced; Which brewery produces most brands of beer; which location produces most beer; among others.
+
+This study will reveal the market competition and whether the industry has potential for growth and how far it from saturation. Analysing the industry's landsacpe to help our client determine whether it is beneficial to invest on expansion either throug purchasing existing breweries or establishhing new ones ad oin whcih locations. Our study will provide a birds eye view on the overal brewing industry.This study will help our client understand the industry's growth stage i.e. whether it is exponential, stabilized or declining. we will provide our client with sufficient data to better understand how many competitors there are in the industry; and what type of beer they are producing.
+
+We have cautioned our client that this study focuses only on production, location, type of beer and size. More research focusing on financial data is necessary and should be considered pari pasu our report. 
+
 ## Datasets: 'Beers.csv' and 'Breweries.csv'
 
-The Beers dataset contains a list of 2410 US craft beers and Breweries dataset contains 558 US breweries.
-
-The two datasets are read into R prior to analysis. The Beers dataset is assigned to an object 'beers' and the Breweries dataset is assigned to an object 'breweries'. 
+Our research will involve investigating and collating two datasets, the first containing a list of 2410 US craft beers and the second containing 558 US breweries. The two datasets are read using the R software prior to analysis. We assigned the Beers dataset to an object 'beers,' and the Breweries dataset to an object 'breweries. 
 ```{r breweries}
 beers <- read.csv ('/Users/swee/Desktop/SMU/Summer 2018/MSDS 6306 - Doing DS/dataset/Beers.csv', header=T, sep=",")
 breweries <- read.csv ('/Users/swee/Desktop/SMU/Summer 2018/MSDS 6306 - Doing DS/dataset/Breweries.csv', header=T, sep=",")
 ```
 
-## Questions to Address
+### 1. Breweries per state
 
-### 1. How many breweries are present in each state?
-
-The 'summary' function is used to obtain the summary statistic of 'State' column within 'breweries' data set.
-
-Below is a list of 51 states along with the number of breweries that are present in each state:
+The 'summary' function is used to obtain the summary statistic of 'State' column within 'breweries' data set. Below is a list of 51 states  with the number of breweries present in each state:
 ```{r breweries1}
 summary(breweries$State)
 ```
 
-### 2. Merge beer data with the breweries data. Print the first six observations and the last six observations to check the merged file.
+### 2. Beer brands and corresponding breweries
 
-A common variable is needed to merge two or more dataset. In this case, the common variable between the two datasets is the brewery id associated with the beer. However, since the variable names are not the same, 'Brew_ID' within the 'breweries' dataset is renamed to 'Brewery_id' to match with the variable name within the 'beers' dataset.
+We merged the two datasets to generate beer brands and the corresponding breweries. Due to the volume of data generated, we selected the first and last six beer brands and the corresponding breweries. 
 
-The 'merge' fuction is used to merge the 'breweries' and the 'beers' datasets by 'Brewery_id' and it is assigned to an object 'beers_breweries'. 
+We used a common variable to merge the two datasets. In this case, the common variable between the two datasets is the brewery id associated with the beer. However, since the variable names are not the same, we renamed 'Brew_ID' within the 'breweries' dataset to 'Brewery_id' to match with the variable name within the 'beers' dataset.
 
-The 'head' and 'tail' functions are used to print the first and last six observations respectively. 
+The 'merge' function is used to merge the 'breweries' and the 'beers' datasets by 'Brewery_id' and  assigned to an object 'beers_breweries.' 
+
+The 'head' and 'tail' functions are used to print the first and last six observations respectively. Below are the brands and their corresponding breweries.
+
 ```{r breweries2}
 names(breweries)[names(breweries) == "Brew_ID"] <- "Brewery_id"
 beers_breweries <- merge(breweries,beers,by="Brewery_id")

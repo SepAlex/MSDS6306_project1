@@ -17,8 +17,6 @@ Our client would like us to provide mor information on the the beer industry, sp
 
 This study will reveal the market competition and whether the industry has potential for growth and how far it from saturation. Analysing the industry's landsacpe to help our client determine whether it is beneficial to invest on expansion either throug purchasing existing breweries or establishhing new ones ad oin whcih locations. Our study will provide a birds eye view on the overal brewing industry.This study will help our client understand the industry's growth stage i.e. whether it is exponential, stabilized or declining. we will provide our client with sufficient data to better understand how many competitors there are in the industry; and what type of beer they are producing.
 
-We have cautioned our client that this study focuses only on production, location, type of beer and size. More research focusing on financial data is necessary and should be considered pari pasu our report. 
-
 ## Datasets: 'Beers.csv' and 'Breweries.csv'
 
 Our research will involve investigating and collating two datasets, the first, "Beers.csv"contains a list of 2410 US craft beers and the second, "Breweries.csv" contains 558 US breweries. The two datasets are read using the R software prior to analysis. We assigned the Beers dataset to an object 'beers,' and the Breweries dataset to an object 'breweries. We shall use these two datasets help us understand the breweries per state, the beer brands in the different breweries, the beer quality in terms of alcohol content and international bitterness unit and which states have beers with most alochol and most bitter.
@@ -34,6 +32,7 @@ The 'summary' function is used to obtain the summary statistic of 'State' column
 ```{r breweries1}
 summary(breweries$State)
 ```
+The top five states are CO(47), CA(39), MI(32),OR(29), and PA(25). Of these, four of them are in the west coast and only one is in the east coast. Overall there are 23 states with five breweries and below. The states with only one brewery are, DC,ND, SD,and WV.Two of these in the east coast and two in the midwestern. From this data we cannot detect any correlation between the breweries and the location.
 
 ### 2. Beer brands and corresponding breweries
 
@@ -58,30 +57,30 @@ The 'is.na' function is used to identify the NA's in the merged dataset 'beers_b
 
 Only 'ABV' and 'IBU' columns contain NA's, 62 and 1005 NA's respectively.
 ```{r breweries3}
-colSums(is.na(beers_breweries))
+  colSums(is.na(beers_breweries))
 ```
 
-### 4. Compute the median alcohol content and international bitterness unit for each state. Plot a bar chart to compare.
+### 4. Median alcohol content (ABV) and international bitterness unit (IBU) per state
 
-The 'tapply' function is used to compute the median alcohol by volume (ABV) and international bitterness unit (IBU) for each state. Since both variables contain NA's, 'na.rm' argument is used to remove NA's when computing the median. 
+The 'tapply' function is used to compute the median alcohol by volume (ABV) and international bitterness unit (IBU) for each state. Since both variables contain NA's, 'na.rm' argument is used to remove NA's when computing the median. IBU is an abbreviation for the International Bitterness Units scale, a gauge of beer's bitterness. What IBUs measure are the parts per million of isohumulone found in a beer according t0 the website, https://beerconnoisseur.com. It further adds that isohumulone is the acid found in hops that gives beer its bitter bite.  It's measurement raganges from 0-100, with 100 being the highest. Bitterness however is relative, as often its sweatened. On the other hand, alcohol by volume content is measured as a percentage. It shows how much of the beer is alcohol and legaly  required to be imprinted on the beer. 
 
-UT State has the lowest median alcohol by volumn. DC and KY are the states with the highest median alcohol by volumne of the beer.
+From our datasets, the State of Utah  has the lowest median alcohol by volume at 0.40 while Washington DC and Kentucky have the highest median alcohol by volumne of the beer at 0.625.
 ```{r breweries4}
 median_ABV <- tapply(beers_breweries$ABV, beers_breweries$State, median, na.rm = TRUE)
 median_ABV
 barplot(median_ABV, xlab = "State", ylab = "Median Alcohol Content", main = "Median Alcohol Content by State", col = "blue", las =2, cex.axis = .5, cex.names = .5)
 ```
 
-WI State has the lowest median international bitterness unit and ME State has the highest median international bitterness unit. There is no IBU data for SD State. 
+On IBU measurement, Wisconsin has the lowest IBU measurement at 19.0, while Maine has the highest at 61.0. There was no IBU data for South Dakota. This is rather odd as in the united states, IBU percetage is required to be printed on the beer. The most likely reason is that the only brewery in South Dakota did not provide the data.  
 ```{r breweries5}
 median_IBU <- tapply(beers_breweries$IBU, beers_breweries$State, median, na.rm = TRUE)
 median_IBU
 barplot(median_IBU, xlab = "State", ylab = "Median International Bitterness Unit", main = "Median International Bitterness Unit by State", col = "green", las =2, cex.axis = .5, cex.names = .5)
 ```
 
-### 5. State the maximum alcoholic (ABV) beer and state with the most bitter (IBU) beer.
+### 5. State with the maximum alcoholic (ABV) beer and state with the most bitter (IBU) beer.
 
-The 'tapply' function is used to compute the maximum alcohol by volume (ABV) and international bitterness unit (IBU) for each state. Since both variables contain NA's, 'na.rm' argument is used to remove NA's when computing the maximum. From our analysis, the state of Colorado has the maximum alcohol by volume of the beer while Oregoon has the most bitter beer.
+The 'tapply' function is used to compute the maximum alcohol by volume (ABV) and international bitterness unit (IBU) for each state. Since both variables contain NA's, 'na.rm' argument is used to remove NA's when computing the maximum. From our analysis, the state of Colorado has the maximum alcohol by volume of the beer at 0.128, while Oregon has the most bitter beer at 138.
 ```{r breweries6}
 max_ABV <- tapply(beers_breweries$ABV, beers_breweries$State, max, na.rm = TRUE)
 max_ABV1 <- sort(max_ABV, decreasing = TRUE)
@@ -92,20 +91,18 @@ max_IBU1 <- sort(max_IBU, decreasing = TRUE)
 head(max_IBU1,1)
 ```
 
-### 6. Summary statistics for the ABV variable.
-
+### 6. Summary statistics for ABV variable.
+There were 62 beers that did not return any ABV. This could most likely be because the breweries did not provide the data. 
 The 'summary' function is used to obtain the summary statistics for the ABV variable in 'beers_breweries' dataset.  
-
-The NA count and the maximum ABV in the output match with the responses in Q3 and Q5.
+*we need to run acode that identifies the staes associated with the NA abv variables** What can we say of the states e.g. location and of the type of beers do the beers have a high IBU? 
 ```{r breweries7}
 summary(beers_breweries$ABV)
 ```
 
-### 7. Is there an apparent relationship between the bitterness of the beer and its alcoholic content? Draw a scatter plot.
+### 7. Is there an apparent relationship between the bitterness of the beer and its alcoholic content? 
 
-The 'plot' function is used to obtain a scatter plot.
+To determine whether there is a relationship between the bitterness of the beer and its alocholic content we plotted the ABV data against the IBU to obtain a scatter plot graph below.
 ```{r breweries8}
 plot(beers_breweries$ABV,beers_breweries$IBU, xlab = "Alcoholic Content", ylab = "Bitterness of the Beer", main = "Correlation between Bitterness and Alcohol by Volume of the Beer", col = "blue")
 ```
-
-Based on the scatter plot, it seems that there is a positive linear relationship between the bitternees and the alcohol by volume of the beer. 
+Based on the scatter plot, it seems that there is a positive linear relationship between the bitternees and the alcohol by volume of the beer. The relationship appears to concentrate between the 0.04 and 40% and intensifies at 0.075 ABV and 100%. We can conclusively say that there is a relationship which intensifies at the lower ABV levels and lower IBU, and starts to scater as the measeurmenst increases.

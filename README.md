@@ -1,24 +1,20 @@
-# MSDS6306_project1
-The Beers Project
+# The Beers Project
+Chew Swee, Mwangi Julius, Orlov Volodymyr
 
-Introduction
-According to a report issued by the Brewers Association in 2016, "the economic impact of small and independent U.S. craft brewers has doubled," in the ast four years. The study further reported that the inustry contributed $68.7B to the industry and provides more than 456,000 full time jobs (https://www.brewbound.com/news/study-us-craft-beer-industry-contributes-68-billion-economy).
+## Introduction
+This project contains source code supporting analysis of beers across United States. The goal of the project is to analyze and describe certain aspects of this alcoholic drinks, including: 
 
-We will analyze the beer industry, see its past trends, production and supply mechanics, and evaluate future outlook. Our study is geered towards understanding the beer industry and establishing expansion possibilities for our client, on grounds that the beer industry is flourishing and the demand is insatiable. This study will reveal the market competition and whether the industry has potential  for growth and how far it from saturation. Analysing the industry's landsacpe to help our client determine whether it is beneficial to invest  on expansion either throug purchasing existing breweries or establishhing new ones ad oin whcih locations.
-Our study will provide a birds eye view on the overal brewing industry.
+* Alcoholic content and bitterness variability across the country
+* Relationship between alcoholic content and bitterness
 
-We hope answer the following questions; how many breweries are there and how are they distributed in the country; Which brewery ranks highest in production; what brands of beer are produced most; How many ounces are commonly produced; Which brewery produces most brands of beer; which location produces most beer; among others.
+## Data
 
-This study will help our client understand what stage the industry is at i.e. whether it is still growing or its nearing a plataeu. Our client will understand how many competitors are i the industry; and what type of beer they are producing.
+The dataset consist of 2 files and contains 558 unique breweries and 2305 distinct beers. Each beer in the beers dataset is described by name, id, alcoholic content and bitterness, style and ounces. Each brewery is described by name, id, city and state.
 
-We caution however, that this study only focuses on production, location, type of beer and size. A correspsonding report on financials should be considered pari pasu our report. As such, additional research  on brewing profitability may be critical before making investement decision.
+## Code structure
 
-Questions
+The main analysis is summarized in the *report.rmd* file. Data can be found in the *data* folder. To compile the report to _HTML_ file run following command line script from the root folder of the project:
 
-1. How many breweries are present in each state?
-2. Merge beer data with the breweries data. Print the first 6 observations and the last six observations to check the merged file.
-3. Report the number of NA's in each column.
-4. Compute the median alcohol content and internationalbitterness unit for each state. Plot a bar chart to compare.
-5. Which state has the maximum alcoholic (ABV) beer? Which state has the most bitter (IBU) beer?
-6. Summary statistics for the ABV variable.
-7. Is there an apparent relationship between the bitterness of the beer and its alcoholic content? Draw a scatter plot.
+```
+$ ./compile_report.r
+```

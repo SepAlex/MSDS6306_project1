@@ -1,7 +1,7 @@
 ---
 Title: "MSDS 6306 - Case Study 1- The Beer Project"
-author: "Chew Swee, Orlov Volodymy, Mwangi Julius"
-Date: "7/10/2018"
+Author: "Swee Chew, Julius Mwangi, and Volodymyr Orlov"
+Date: "7/21/2018"
 output:
   html_document:
     keep_md: yes
@@ -13,27 +13,26 @@ output:
 
 According to a report issued by the Brewers Association in 2016, "in just four years, the economic impact of small and independent U.S. craft brewers has doubled,". The study further reported that, "the inustry contributed $68.7B to the U.S. economy and provides more than 456,000 full time jobs"^[https://www.brewbound.com/news/study-us-craft-beer-industry-contributes-68-billion-economy].
 
-Our study is geered towards understanding the beer industry and establishing possibilities for our client, on the premise that the beer industry is flourishing with an insatiable demand. Our research questions are:
+Our study is geared towards understanding the beer industry and establishing possibilities for our client, on the premise that the beer industry is flourishing with an insatiable demand. Our research questions are as follow:
 
-* How many breweries are there in the United States?
-* What brands of beer are produced most?
-* How many ounces are commonly produced?
-* Which brewery produces most brands of beer?
-* Which state produces most beer?
+* How many breweries are there in each state?
+* Which state has the highest number of breweries?
+* What are the median alcohol content and international bitterness unit for each state?
+* Which state produces beer with the maximum alcohol by volume?
+* Which state produces the most bitter beer?
 * What is the alcoholic content and bitterness variability across the states?
-* Is there a relationship between alcoholic contents and bitterness?
+* Is there a relationship between alcoholic content and bitterness of the beer?
 
-Analysing the industry's landscape will help our client determine whether it is beneficial to venture in the beer industry as well as the industry's growth stage i.e. whether it is exponential, stabilized, or declining. Our study provides a birds eye view on the overal brewing industry. We provide sufficient data to better understand how many breweries are out there in the industry and what types of beer are they producing.
+Analyzing the industry's landscape will help our client determines whether it is beneficial to venture in the beer industry as well as the industry's growth stage, i.e. whether it is exponential, stabilized, or declining. Our study provides a bird's eye view on the overall brewing industry. We provide sufficient data to our client in order to better understand how many breweries are out there in the industry and what types of beer are they producing.
 
 ## Data
 
-We obtained two datasets consisting of 2 files. The first file, _Beers.csv_ contains a list of 2410 US craft beers. Each beer in the beers dataset is described by _name_, _ID_, _alcoholic content_ and _bitterness_, _style_ and _ounces_. The second dataset, _Breweries.csv_ contains 558 US breweries and 2305 distinct beers.  Each brewery is described by _name_, _ID_, _city_ and _state_. Our research will involve collating and analysing the two datasets. We shall use these two datasets to understand the breweries per state, the beer brands in the different breweries, the beer quality in terms of alcohol content and international bitterness unit and which states have beers with most alochol and most bitter.^[We have no information whether the data  collected was voluntary or as a result of state reporting requirement, as such we can vet into it's accuracy hence reliability]
+We obtained two datasets consisting beer and brewery information. The first dataset, _Beers.csv_, contains a list of 2410 US craft beers. Each beer in the beers dataset is described by _name_, _beer ID_, _alcoholic content_, _bitterness_, _brewery ID_, _style_ and _ounces_. The second dataset, _Breweries.csv_, contains 558 US breweries and 2305 distinct beers. Each brewery is described by _name_, _brewery ID_, _city_ and _state_. Our research involves collating and analyzing the two datasets. We shall use these two datasets to understand the breweries per state, the beer quality in terms of alcohol content and international bitterness unit, and which states have beers with the most alcohol and have the most bitter beer.^[We have no information whether the data collected was voluntary or as a result of state reporting requirement, as such we can vet into its accuracy hence reliability]
 
 
 ```r
 beers <- read.csv ('data/Beers.csv', header=T, sep=",")
 breweries <- read.csv ('data/Breweries.csv', header=T, sep=",")
-```
 ```
 
 ### Breweries Summary
@@ -61,21 +60,21 @@ colnames(summ) <- c('state', 'count')
 plot_usmap(include = summ$state, data=summ, values='count') + labs(fill='Number of Breweries') + theme(legend.position="bottom")
 ```
 
-![](report_files/figure-html/breweries1-1.png)<!-- -->
+![](Case_Study_1_Report_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
-The top five states are:
+The top five states with the highest number breweries are:
 
 1. Colorado, 47 breweries
-1. California, 39 breweries
-1. Michigan, 32 breweries
-1. Oregon, 29 breweries
-1. Pennsylvania, 25 breweries
+2. California, 39 breweries
+3. Michigan, 32 breweries
+4. Oregon, 29 breweries
+5. Texas, 28 breweries
 
-Of these, three are in the west coast (Colorado, California, Oregon), one is a midwestern state (Michigan) and one is on the east coast (Pennsylvania). Overall there are 23 states with five breweries and below. The states with only one brewery are: District of Columbia, North Dakota, South Dakota and West Virginia. Two of these are in the east coast and two in the midwestern region of the United States. From this summary and the map we can see that west coast states have slightly larger number of breweries on average than other regions of the United States. Also, Colorado has distinctly larger number of breweries compared to the rest of the states.
+Of these, three are in the West Coast (Colorado, California, Oregon), one is in the Midwest (Michigan) and one is in the South Central (Texas). Overall, there are 23 states with five breweries and below. The states with only one brewery are: District of Columbia, North Dakota, South Dakota and West Virginia. Two of these are in the East Coast and two are in the Midwestern region of the United States. From this summary and the map, we can see that the West Coast has a slightly larger number of breweries on average than other regions of the United States. Also, Colorado distinctly has a larger number of breweries compared to the rest of the states.
 
 ### Beer Brands and Corresponding Breweries
 
-To be able to analyse _International Bitterness Units_ (IBU) and _Alcohol by Volume_ (ABV) content of a beer at the state level we've merged datasets _breweries_ and _beers_ into a single table using brewery ID as a join key. The first and last 6 lines of the full table are shown below.
+To be able to analyze _International Bitterness Units (IBU)_ and _Alcohol by Volume (ABV)_ content of a beer at the state level, we've merged datasets, _breweries_ and _beers_, into a single table using _Brewery_id_ as a join key. The first and last 6 lines of the full table are shown below.
 
 
 ```r
@@ -129,13 +128,13 @@ tail(beers_breweries)
 ## 2410     12
 ```
 
-IBUs measure parts per million of isohumulone found in a beer according t0 the website^[https://beerconnoisseur.com]. It further adds that isohumulone is the acid found in hops that gives beer its bitter bite.  It's measurement raganges from 0-100, with 100 being the highest. Bitterness however is relative, as often its sweatened. On the other hand, ABV content is measured as a percentage. It shows how much of the beer is alcohol and legaly  required to be imprinted on the beer. 
+IBUs measure parts per million of isohumulone found in a beer according to the website^[https://beerconnoisseur.com]. It further adds that isohumulone is the acid found in hops that gives beer its bitter bite.  Its measurement ranges from 0-100, with 100 being the highest. Bitterness, however, is relative, as often it's sweetened. On the other hand, ABV is measured as a percentage. It indicates how much of the beer is alcohol by volume and it's legally required to be imprinted on the beer. 
 
 ### Missing Values
 
-Before doing analysis of IBU and ABV content of beers we screened the data for missing values. Here is what we've found:
+Before doing analysis of IBU and ABV content of beers, we screened the data for missing values. Here is what we've found:
 
-From our analysis,  only 'ABV' and 'IBU' columns contain 62 NA's, 1005 NA's respectively.
+From our analysis, 'ABV' and 'IBU' columns contain 62 NA's, 1005 NA's respectively.
 
 ```r
   colSums(is.na(beers_breweries))
@@ -150,7 +149,7 @@ From our analysis,  only 'ABV' and 'IBU' columns contain 62 NA's, 1005 NA's resp
 
 ### Median Alcohol Content (ABV) and International Bitterness Unit (IBU) per State
 
-Main focus of this project is aggregate analysis of IBU and ABV levels. Here we looked at median IBU and ABV across the states. We found that the State of Utah  has the lowest median alcohol by volume at 0.40 while Washington DC and Kentucky have the highest median alcohol by volumne of the beer at 0.625.
+Main focus of this project is the aggregate analysis of IBU and ABV levels. Here we look at the median IBU and ABV across the states. We found that the State of Utah has the lowest median alcohol by volume at 0.40 while Washington DC and Kentucky have the highest median alcohol by volumne of the beer at 0.625.
 
 
 ```r
@@ -174,10 +173,10 @@ median_ABV
 ```
 
 ```r
-barplot(median_ABV, xlab = "State", ylab = "Median Alcohol Content", main = "Median Alcohol Content by State", col = "blue", las =2, cex.axis = .5, cex.names = .5)
+barplot(median_ABV, xlab = "State", ylab = "Median Alcohol Content", main = "Median Alcohol Content by State", col = "steelblue1", las =2, cex.axis = .5, cex.names = .5)
 ```
 
-![](report_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
+![](Case_Study_1_Report_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
 
 ```r
@@ -187,9 +186,9 @@ colnames(abv_summ) <- c('state', 'abv')
 plot_usmap(include = abv_summ$state, data=abv_summ, values='abv') + labs(fill='ABV level') + theme(legend.position="bottom")
 ```
 
-![](report_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+![](Case_Study_1_Report_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
-On IBU measurement, Wisconsin has the lowest IBU measurement at 19.0, while Maine has the highest at 61.0. There was no IBU data for South Dakota. This is rather odd as in the united states, IBU percetage is required to be printed on the beer. The most likely reason is that the only brewery in South Dakota did not provide the data.  
+On IBU measurement, Wisconsin has the lowest IBU measurement at 19.0, while Maine has the highest at 61.0. There is no IBU data for South Dakota. This is rather odd as in the United States, IBU percentage is required to be printed on the beer. The most likely reason is that the only brewery in South Dakota did not provide the IBU information.  
 
 
 ```r
@@ -209,10 +208,10 @@ median_IBU
 ```
 
 ```r
-barplot(median_IBU, xlab = "State", ylab = "Median International Bitterness Unit", main = "Median International Bitterness Unit by State", col = "green", las =2, cex.axis = .5, cex.names = .5)
+barplot(median_IBU, xlab = "State", ylab = "Median International Bitterness Unit", main = "Median International Bitterness Unit by State", col = "steelblue2", las =2, cex.axis = .5, cex.names = .5)
 ```
 
-![](report_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+![](Case_Study_1_Report_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
 
 
 ```r
@@ -222,18 +221,35 @@ colnames(ibu_summ) <- c('state', 'ibu')
 plot_usmap(include = ibu_summ$state, data=ibu_summ, values='ibu') + labs(fill='IBU level') + theme(legend.position="bottom")
 ```
 
-![](report_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+![](Case_Study_1_Report_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
 
-### State with the maximum alcoholic (ABV) beer 
+### State with the Maximum Alcoholic (ABV) Beer 
 
-According to a post in a beer bloggers website, humans can only detect up to about 100 IBUs in beer^[https://www.ratebeer.com], as such any measurement above 100 is a waste as the human taste buds cannot experience the bitterness.
+According to a post in a beer bloggers website, humans can only detect up to about 100 IBUs in beer^[https://www.ratebeer.com], as such any measurement above 100 is a waste as the human taste buds cannot experience the difference in bitterness.
 
-As per our analysis, Colorado has the maximum alcohol by volume of the beer at 0.128, followed by Kentucky with 0.125, Indiana with 0.12, and New York with 0.10. The lowest was Delaware with 0.055.
+As per our analysis, Colorado has the maximum alcohol by volume of the beer at 0.128, followed by Kentucky with 0.125, Indiana with 0.120, and New York with 0.100. The lowest is Delaware with 0.055.
 
 
 ```r
 max_ABV <- tapply(beers_breweries$ABV, beers_breweries$State, max, na.rm = TRUE)
 max_ABV1 <- sort(max_ABV, decreasing = TRUE)
+max_ABV1
+```
+
+```
+##    CO    KY    IN    NY    CA    ID    MA    ME    MI    MN    NC    NJ 
+## 0.128 0.125 0.120 0.100 0.099 0.099 0.099 0.099 0.099 0.099 0.099 0.099 
+##    NV    OH    PA    TX    WI    SC    IL    NE    VT    AZ    IA    AL 
+## 0.099 0.099 0.099 0.099 0.099 0.097 0.096 0.096 0.096 0.095 0.095 0.093 
+##    DC    CT    UT    LA    OR    VA    RI    KS    MD    OK    WA    HI 
+## 0.092 0.090 0.090 0.088 0.088 0.088 0.086 0.085 0.085 0.085 0.084 0.083 
+##    FL    MO    MS    NM    MT    GA    WY    SD    AK    ND    WV    NH 
+## 0.082 0.080 0.080 0.080 0.075 0.072 0.072 0.069 0.068 0.067 0.067 0.065 
+##    TN    AR    DE 
+## 0.062 0.061 0.055
+```
+
+```r
 head(max_ABV1,1)
 ```
 
@@ -242,9 +258,9 @@ head(max_ABV1,1)
 ## 0.128
 ```
 
-### State with the most bitter (IBU) beer
+### State with the Most Bitter (IBU) Beer
 
-From our analysis below,  Sixteen states reported beer with an IBU exceeding 100 with Oregon in the west coast with the most bitter beer at 138 IBU. 
+From our analysis below, a brewery in Oregon in the West Coast produces the most bitter beer at 138 IBU. Sixteen states total reported beer with an IBU exceeding 100. 
 
 
 ```r
@@ -272,10 +288,18 @@ max_IBU1
 ##   65   61   60   52   39 -Inf
 ```
 
-### Summary statistics for ABV variable
+```r
+head(max_IBU1,1)
+```
 
-Our analysis of ABV values showed that range of of this column is from 0.001 to 0.128
-percentage, the distribution is slightly right-skewed and is not normal. Our dataset has 62 beers with missing ABV value. This could most likely be because some breweries choose not provide all values for some beers.
+```
+##  OR 
+## 138
+```
+
+### Summary Statistics for ABV Variable
+
+Our analysis shows that the range of ABV column is from 0.001 to 0.128 percentage, the distribution is not normal and it's slightly right-skewed. Our dataset has 62 beers with missing ABV value. This could most likely be because some breweries choose not to provide all values for some of their beers.
 
 
 ```r
@@ -287,34 +311,34 @@ summary(beers_breweries$ABV)
 ## 0.00100 0.05000 0.05600 0.05977 0.06700 0.12800      62
 ```
 
-### Relationship between Bitterness and alcoholic content in the Beer 
+### Relationship between Bitterness and Alcohol Content of the Beer 
 
-To better understand relationship between the bitterness of the beer and its alocholic content we plotted the ABV data against the IBU to obtain a scatter plot graph below.
+To better understand relationship between the bitterness of the beer and its alochol content, we plotted the ABV data against the IBU to obtain a scatter plot below.
 
 
 ```r
-plot(beers_breweries$ABV,beers_breweries$IBU, xlab = "Alcoholic Content", ylab = "Bitterness of the Beer", main = "Bitterness vs alcoholic content", col = "blue")
+plot(beers_breweries$ABV,beers_breweries$IBU, xlab = "Alcohol Content", ylab = "Bitterness of the Beer", main = "Bitterness vs Alcohol Content", col = "blue")
 ```
 
-![](report_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+![](Case_Study_1_Report_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
 
 Based on the scatter plot, it seems that there is a relationship between the bitternees and the alcohol by volume of the beer. When ABV is plotted against log-transformed IBU we can see that this relationship might be modelled as an n^th^ degree polynomial.
 
 
 ```r
-plot(beers_breweries$ABV, log(beers_breweries$IBU), xlab = "Alcoholic Content", ylab = "Bitterness of the Beer", main = "Bitterness vs alcoholic content", col = "blue")
+plot(beers_breweries$ABV, log(beers_breweries$IBU), xlab = "Alcohol Content", ylab = "Bitterness of the Beer", main = "Bitterness vs Alcohol content", col = "blue")
 ```
 
-![](report_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+![](Case_Study_1_Report_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
 
 ### Conclusion
 
 In this work we have analysed ABV and IBU content of beers from 51 states of the United States. We found that:
 
 * Data is fairly clean but is not perfect. It has some missing values which should be investigated further.
-* Colorado and west coast has bigger number of breweries per state if compared to the rest of the country. 
-* The State of Utah  has the lowest median alcohol by volume at 0.40 while Washington DC and Kentucky have the highest median alcohol by volumne of the beer at 0.625.
-* Wisconsin has the lowest IBU measurement at 19.0, while Maine has the highest at 61.0
-* Colorado has a beer with the maximum alcohol by volume at 0.128
-* Oregon has the most bitter beer at 138 IBU
+* West Coast has a larger number of breweries per state compared to the rest of the country. 
+* The State of Utah has the lowest median alcohol by volume at 0.40 while Washington DC and Kentucky have the highest median alcohol by volumne of the beer at 0.625.
+* Wisconsin has the lowest median IBU measurement at 19.0, while Maine has the highest at 61.0.
+* Colorado has a beer with the maximum alcohol by volume at 0.128.
+* Oregon has the most bitter beer at 138 IBU.
 * There is a relationship between IBU and ABV variables which can be modelled as an n^th^ degree polynomial.

@@ -17,7 +17,7 @@ library(ggplot2)
 
 According to a report issued by the Brewers Association in 2016, "in just four years, the economic impact of small and independent U.S. craft brewers has doubled,". The study further reported that, "the inustry contributed $68.7B to the U.S. economy and provides more than 456,000 full time jobs"^[https://www.brewbound.com/news/study-us-craft-beer-industry-contributes-68-billion-economy].
 
-Our study is geared towards providing an understanding of the beer industry and establishing possibilities for our client, on the premise that the beer industry is flourishing with an insatiable demand. We understand that for years, a few powerful breweries controlled the beer market. We also learnt that craft breweries, i.e. small, independent and traditional microbreweries, have flooded the beer market and curved their market share through their fan base that comprise “drinkers who appreciate beer that is locally made, produced in small batches to high quality standards and of course, the sheer variety and multitude of flavors on offer.”^ https://www.forbes.com/sites/niallmccarthy/2018/01/25/the-u-s-beer-industrys-workforce-more-than-doubled-in-a-decade-infographic/#6a92c25d1255.
+Our study is geared towards providing an understanding of the beer industry and establishing possibilities for our client, on the premise that the beer industry is flourishing with an insatiable demand. We understand that for years, a few powerful breweries controlled the beer market. We also learned that craft breweries, i.e. small, independent and traditional microbreweries, have flooded the beer market and curved their market share through their fan base that comprises “drinkers who appreciate beer that is locally made, produced in small batches to high quality standards and of course, the sheer variety and multitude of flavors on offer.”^ https://www.forbes.com/sites/niallmccarthy/2018/01/25/the-u-s-beer-industrys-workforce-more-than-doubled-in-a-decade-infographic/#6a92c25d1255.
 
 Our research seeks to answer the following questions:
 
@@ -29,7 +29,7 @@ Our research seeks to answer the following questions:
 * What is the alcoholic content and bitterness variability across the states?
 * Is there a relationship between alcoholic content and bitterness of the beer?
 
-In analyzing the beer industry's landscape we shall provide our client a bird's eye view on the overall brewing industry to ultimately support the decision to or not to venture into the beer industry. Due to limitation on the data provided, our report  will focus on production only i.e. an understanding of how many breweries there are in the country, and the types of beer they produce.
+In analyzing the beer industry's landscape we shall provide our client a bird's eye view on the overall brewing industry to ultimately support the decision of whether or not to venture into the beer industry. Due to limitation on the data provided, our report  will focus on production only i.e. an understanding of how many breweries there are in the country, and the types of beer they produce.
 
 ## Data
 
@@ -73,11 +73,11 @@ head(beers_breweries)
 tail(beers_breweries)
 ```
 
-IBUs measure parts per million of isohumulone found in a beer according to the Beer Connoisseur website^[https://beerconnoisseur.com]. It further adds that isohumulone is the acid found in hops that gives beer its bitter bite.  Its (IBU) measurement ranges from 0-100, with 100 being the highest. Bitterness, however, is relative, as often it's sweetened. On the other hand, ABV is measured as a percentage and indicates how much of the beer is alcohol by volume. The website further indicated that the IBU and ABV measurements are  legally required to be imprinted on the beer. 
+IBUs measure parts per million of isohumulone found in a beer according to the Beer Connoisseur website^[https://beerconnoisseur.com]. It further adds that isohumulone is the acid found in hops that gives beer its bitter bite. Its (IBU) measurement ranges from 0-100, with 100 being the highest. Bitterness, however, is relative, as often it's sweetened. On the other hand, ABV is measured as a percentage and it indicates how much of the beer is alcohol by volume. The website further stated that the IBU and ABV measurements are legally required to be imprinted on the beer. 
 
 ### Missing Values
 
-Before doing analysis of IBU and ABV content of beers, we screened the data for missing values. From our analysis, we found out that 'ABV' and 'IBU' columns contain 62 NA's, 1005 NA's respectively. This could affect the overall reporting on the ABV and IBU reporting.
+Before doing analysis of IBU and ABV content of beers, we screened the data for missing values. Based on our analysis, we found out that 'ABV' and 'IBU' columns contain 62 NA's, 1005 NA's respectively. This could affect the overall reporting on the ABV and IBU measurements.
 ```{r}
   colSums(is.na(beers_breweries))
 ```
@@ -116,8 +116,6 @@ plot_usmap(include = ibu_summ$state, data=ibu_summ, values='ibu') + labs(fill='I
 
 ### State with the Maximum Alcoholic (ABV) Beer 
 
-According to a post in a beer bloggers website, humans can only detect up to about 100 IBUs in beer^[https://www.ratebeer.com], as such any measurement above 100 is a waste as the human taste buds cannot experience the difference in bitterness.
-
 As per our analysis, Colorado has the maximum alcohol by volume of the beer at 0.128, followed by Kentucky with 0.125, Indiana with 0.120, and New York with 0.100. The lowest is Delaware with 0.055.
 
 ```{r}
@@ -128,6 +126,8 @@ head(max_ABV1,1)
 ```
 
 ### State with the Most Bitter (IBU) Beer
+
+According to a post in a beer bloggers website, humans can only detect up to about 100 IBUs in beer^[https://www.ratebeer.com], as such any measurement above 100 is a waste as the human taste buds cannot experience the difference in bitterness.
 
 From our analysis below, a brewery in Oregon in the West Coast produces the most bitter beer at 138 IBU. Sixteen states in total reported beer with an IBU exceeding 100. 
 
@@ -140,7 +140,7 @@ head(max_IBU1,1)
 
 ### Summary Statistics for ABV Variable
 
-Our analysis shows that the range of ABV column is from 0.001 to 0.128 percentage, the distribution is not normal and it's slightly right-skewed. Our dataset has 62 beers with missing ABV value, which could be attributed to the reporting breweries choosing not to provide the data. We cannot tell how the distribution would have reponded if all the data was reported.
+Our analysis shows that the range of ABV column is from 0.001 to 0.128 percentage, the distribution is not normal and it's slightly right-skewed. Our dataset has 62 beers with missing ABV value, the breweries that chose not to provide the data could have attributed to this non-normality. We cannot tell how the distribution would have responded if all the data were reported.
 
 ```{r}
 summary(beers_breweries$ABV)
@@ -154,10 +154,10 @@ To better understand relationship between the bitterness of the beer and its alc
 plot(beers_breweries$ABV,beers_breweries$IBU, xlab = "Alcohol Content", ylab = "Bitterness of the Beer", main = "Bitterness vs Alcohol Content", col = "blue")
 ```
 
-Based on the scatter plot, it seems that there is a relationship between the bitternees and the alcohol by volume of the beer. When ABV is plotted against log-transformed IBU we can see that this relationship might be modelled as an n^th^ degree polynomial.
+Based on the scatter plot, it seems that there is a relationship between the bitternees and the alcohol by volume of the beer. When ABV is plotted against log-transformed IBU we can see that this relationship might be modeled as an n^th^ degree polynomial.
 
 ```{r}
-plot(beers_breweries$ABV, log(beers_breweries$IBU), xlab = "Alcohol Content", ylab = "Bitterness of the Beer", main = "Bitterness vs Alcohol content", col = "blue")
+plot(beers_breweries$ABV, log(beers_breweries$IBU), xlab = "Alcohol Content", ylab = "Log_Bitterness of the Beer", main = "Bitterness vs Alcohol content", col = "blue")
 ```
 
 ### Conclusion
